@@ -1,20 +1,20 @@
-class CustomersController {
-    constructor(){
-        this.costumers = [
+    let customers = [
             {id: 1, name: "Dev Samurai", site: "http://devsamurai.com.br"},
             {id: 2, name: "Google", site: "http://google.com"},
             {id: 3, name: "UOL", site: "http://uol.com.br"}
-        ];
-    }
+    ];
+
+class CustomersController {
+    
     
     //Listagem dos costumers
     index (req, res) {
-        return res.json(this.customers);
+        return res.json(customers);
     }
     //Mostra costumer
     show (req, res) {
         const id = parseInt(req.params.id);
-        const customer = this.customers.find(item => item.id === id); 
+        const customer = customers.find(item => item.id === id); 
         const status = customer ? 200 : 404;
 
         return res.status(status).json(customer);
@@ -22,7 +22,7 @@ class CustomersController {
     //Cria costumer
     create (req, res){
         const { name, site} = req.body;
-        const id = this.customers[this.customers.length - 1].id + 1;
+        const id = customers[this.customers.length - 1].id + 1;
 
         const newCustomer = { id, name, site };
         customers.push(newCustomer);
@@ -34,24 +34,24 @@ class CustomersController {
         const id = parseInt(req.params.id);
         const { name, site} = req.body;
 
-        const index = this.customers.findIndex(item => item.id === id);
+        const index = customers.findIndex(item => item.id === id);
         const status = index >= 0 ? 200 : 404;
 
         if(index >= 0) {
             this.customers[index] = { id: parseInt(id), name, site }
         }
 
-        return res.status(status).json(this.customers[index]);
+        return res.status(status).json(customers[index]);
 
     }
     //Exclui costumers
     destroy (req, res){
         const id = parseInt(req.params.id);
-        const index = this.customers.findIndex(item => item.id === id);
+        const index = customers.findIndex(item => item.id === id);
         const status = index >= 0 ? 200 : 404;
 
         if(index >=0){
-            this.customers.splice(index, 1);
+            customers.splice(index, 1);
         }
 
         return res.status(status).json();
@@ -59,4 +59,4 @@ class CustomersController {
     
 }
 
-module.exports = new  CustomersController();
+export default new CustomersController();
